@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing - Maa Glass</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Include libraries for PDF/Excel export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Header (same as dashboard.html) -->
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="../images/logo.png" alt="" class="h-12">
+                <span class="ml-2 text-2xl font-bold text-blue-600">Maa Glass</span>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="dashboard.html" class="text-gray-700 hover:text-blue-600">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="billing.html" class="text-gray-700 hover:text-blue-600">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </a>
+                <div class="relative group">
+                    <button class="text-gray-700 hover:text-blue-600 flex items-center">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </button>
+                    <div
+                        class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 hidden group-hover:block z-50">
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">My Profile</a>
+                        <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Order History</a>
+                        <a href="#" id="logout-btn" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Billing Content -->
+    <section class="py-8">
+        <div class="container mx-auto px-4">
+            <div class="mb-8 flex justify-between items-center">
+                <div>
+                    <h1 class="text-2xl font-bold text-gray-800">Create New Bill</h1>
+                    <p class="text-gray-600">Generate invoices for your glass orders</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="save-bill" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition duration-300">Save Bill</button>
+                    <button id="preview-bill" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg font-medium transition duration-300">Preview</button>
+                </div>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2">
+                    <div class="bg-white p-6 rounded-xl shadow-sm mb-6">
+                        <h2 class="text-xl font-semibold mb-4">Customer Details</h2>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="customer-name" class="block text-gray-700 mb-2">Customer Name</label>
+                                <input type="text" id="customer-name" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="customer-email" class="block text-gray-700 mb-2">Email</label>
+                                <input type="email" id="customer-email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="customer-phone" class="block text-gray-700 mb-2">Phone Number</label>
+                                <input type="tel" id="customer-phone" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            </div>
+                            <div>
+                                <label for="customer-address" class="block text-gray-700 mb-2">Address</label>
+                                <textarea id="customer-address" rows="2" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-semibold">Order Items</h2>
+                            <button id="add-item" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium transition duration-300">Add Item</button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-gray-200">
+                                        <th class="pb-3 text-left text-gray-700">Product</th>
+                                        <th class="pb-3 text-left text-gray-700">Dimensions</th>
+                                        <th class="pb-3 text-left text-gray-700">Thickness</th>
+                                        <th class="pb-3 text-left text-gray-700">Qty</th>
+                                        <th class="pb-3 text-left text-gray-700">Price</th>
+                                        <th class="pb-3 text-left text-gray-700">Total</th>
+                                        <th class="pb-3 text-left text-gray-700"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="items-table">
+                                    <!-- Items will be added here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm sticky top-4">
+                        <h2 class="text-xl font-semibold mb-4">Bill Summary</h2>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="subtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Tax (8%)</span>
+                                <span id="tax">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Discount</span>
+                                <span id="discount">$0.00</span>
+                            </div>
+                            <div class="border-t border-gray-200 pt-4 flex justify-between font-bold">
+                                <span>Total</span>
+                                <span id="total">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <!-- <div class="mt-8">
+                            <label for="discount-code" class="block text-gray-700 mb-2">Discount Code</label>
+                            <div class="flex">
+                                <input type="text" id="discount-code" class="w-full px-4 py-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <button id="apply-discount" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-r font-medium transition duration-300">Apply</button>
+                            </div>
+                        </div> -->
+                        
+                        <div class="mt-8">
+                            <label for="notes" class="block text-gray-700 mb-2">Notes</label>
+                            <textarea id="notes" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        
+                        <div class="mt-8 grid grid-cols-2 gap-3">
+                            <button id="generate-pdf" class="bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg font-medium transition duration-300 flex items-center justify-center">
+                                <i class="fas fa-file-pdf mr-2"></i> PDF
+                            </button>
+                            <button id="generate-excel" class="bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg font-medium transition duration-300 flex items-center justify-center">
+                                <i class="fas fa-file-excel mr-2"></i> Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bill Preview Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" id="preview-modal">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <h2 class="text-2xl font-bold">Bill Preview</h2>
+                    <button id="close-preview" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div id="bill-preview-content">
+                    <!-- Bill content will be inserted here -->
+                </div>
+                <div class="mt-6 flex justify-end space-x-3">
+                    <button id="print-bill" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition duration-300">Print</button>
+                    <button id="download-bill" class="border border-blue-600 text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-lg font-medium transition duration-300">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="images/logo-white.png" alt="" class="h-10">
+                        <span class="ml-2 text-xl font-bold text-white">Maa Glass</span>
+                    </div>
+                    <p class="mb-4">Premium glass solutions for modern living and commercial spaces.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#products" class="hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="#about" class="hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition duration-300">Testimonials</a></li>
+                        <li><a href="#contact" class="hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Products</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition duration-300">Tempered Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Mirror Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Frosted Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Laminated Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Decorative Glass</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Newsletter</h3>
+                    <p class="mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l bg-gray-800 text-white focus:outline-none focus:ring-1 focus:ring-blue-500 w-full">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r text-white"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>&copy; 2023 Maa Glass. All rights reserved. | <a href="#" class="hover:text-white transition duration-300">Privacy Policy</a> | <a href="#" class="hover:text-white transition duration-300">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/billing.js"></script>
+</body>
+</html>

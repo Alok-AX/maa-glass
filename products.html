@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Maa Glass</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="images/logo.png" alt="" class="h-12">
+                <span class="ml-2 text-2xl font-bold text-blue-600">Maa Glass</span>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                <a href="#products" class="text-gray-700 hover:text-blue-600 font-medium">Products</a>
+                <a href="#about" class="text-gray-700 hover:text-blue-600 font-medium">About</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-blue-600 font-medium">Testimonials</a>
+                <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="text-gray-700 hover:text-blue-600">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a href="#" class="md:hidden text-gray-700" id="mobile-menu-button">
+                    <i class="fas fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white py-2 px-4 shadow-md" id="mobile-menu">
+            <a href="#home" class="block py-2 text-gray-700 hover:text-blue-600">Home</a>
+            <a href="#products" class="block py-2 text-gray-700 hover:text-blue-600">Products</a>
+            <a href="#about" class="block py-2 text-gray-700 hover:text-blue-600">About</a>
+            <a href="#testimonials" class="block py-2 text-gray-700 hover:text-blue-600">Testimonials</a>
+            <a href="#contact" class="block py-2 text-gray-700 hover:text-blue-600">Contact</a>
+            <a href="login.html" class="block py-2 text-blue-600 font-medium">Login</a>
+        </div>
+    </header>
+
+    <!-- Product Showcase -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Our Glass Collection</h1>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore our premium range of glass products for all your residential and commercial needs.</p>
+            </div>
+            
+            <!-- Product Filter -->
+            <div class="mb-8 flex flex-wrap justify-center gap-4">
+                <button class="product-filter-btn px-4 py-2 rounded-full bg-blue-600 text-white" data-filter="all">All Products</button>
+                <button class="product-filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300" data-filter="tempered">Tempered Glass</button>
+                <button class="product-filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300" data-filter="mirror">Mirror Glass</button>
+                <button class="product-filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300" data-filter="frosted">Frosted Glass</button>
+                <button class="product-filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300" data-filter="laminated">Laminated Glass</button>
+                <button class="product-filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300" data-filter="decorative">Decorative Glass</button>
+            </div>
+            
+            <!-- Products Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="products-container">
+                <!-- Product items will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Details Modal -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center p-4" id="product-modal">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-6">
+                    <h2 class="text-2xl font-bold" id="modal-product-name">Product Name</h2>
+                    <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <img id="modal-product-image" src="" alt="Product" class="w-full rounded-lg shadow-md">
+                        <div class="grid grid-cols-4 gap-2 mt-4">
+                            <img src="images/tempered-glass.jpg" alt="Thumbnail" class="cursor-pointer h-16 object-cover rounded border border-gray-200">
+                            <img src="images/mirror-glass.jpg" alt="Thumbnail" class="cursor-pointer h-16 object-cover rounded border border-gray-200">
+                            <img src="images/frosted-glass.jpg" alt="Thumbnail" class="cursor-pointer h-16 object-cover rounded border border-gray-200">
+                            <img src="images/laminated-glass.jpg" alt="Thumbnail" class="cursor-pointer h-16 object-cover rounded border border-gray-200">
+                        </div>
+                    </div>
+                    <div>
+                        <p class="text-gray-700 mb-6" id="modal-product-description">Product description goes here.</p>
+                        <div class="mb-6">
+                            <h3 class="font-semibold mb-2">Specifications</h3>
+                            <ul class="space-y-2 text-gray-600" id="modal-product-specs">
+                                <!-- Specs will be added here -->
+                            </ul>
+                        </div>
+                        <div class="flex items-center mb-6">
+                            <span class="text-2xl font-bold text-blue-600 mr-4" id="modal-product-price">$45.00</span>
+                            <span class="text-gray-500" id="modal-product-unit">per sq.ft</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="quantity" class="block mb-2">Quantity (sq.ft)</label>
+                                <input type="number" id="quantity" min="1" value="1" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            </div>
+                            <div>
+                                <label for="thickness" class="block mb-2">Thickness</label>
+                                <select id="thickness" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                    <option value="6mm">6mm</option>
+                                    <option value="8mm">8mm</option>
+                                    <option value="10mm">10mm</option>
+                                    <option value="12mm">12mm</option>
+                                </select>
+                            </div>
+                            <button id="add-to-cart" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-medium transition duration-300">Add to Cart</button>
+                            <button id="request-quote" class="w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-3 rounded-lg font-medium transition duration-300">Request Custom Quote</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="images/logo-white.png" alt="" class="h-10">
+                        <span class="ml-2 text-xl font-bold text-white">Maa Glass</span>
+                    </div>
+                    <p class="mb-4">Premium glass solutions for modern living and commercial spaces.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="hover:text-white transition duration-300">Home</a></li>
+                        <li><a href="#products" class="hover:text-white transition duration-300">Products</a></li>
+                        <li><a href="#about" class="hover:text-white transition duration-300">About Us</a></li>
+                        <li><a href="#testimonials" class="hover:text-white transition duration-300">Testimonials</a></li>
+                        <li><a href="#contact" class="hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Products</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="hover:text-white transition duration-300">Tempered Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Mirror Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Frosted Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Laminated Glass</a></li>
+                        <li><a href="#" class="hover:text-white transition duration-300">Decorative Glass</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Newsletter</h3>
+                    <p class="mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l bg-gray-800 text-white focus:outline-none focus:ring-1 focus:ring-blue-500 w-full">
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-r text-white"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>&copy; 2023 Maa Glass. All rights reserved. | <a href="#" class="hover:text-white transition duration-300">Privacy Policy</a> | <a href="#" class="hover:text-white transition duration-300">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>
