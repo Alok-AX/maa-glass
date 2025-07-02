@@ -94,14 +94,25 @@
                                         <th class="pb-3 text-left text-gray-700">Thickness</th>
                                         <th class="pb-3 text-left text-gray-700">Qty</th>
                                         <th class="pb-3 text-left text-gray-700">Price</th>
+                                        <th class="pb-3 text-left text-gray-700">Web Billing</th>
+                                        <th class="pb-3 text-left text-gray-700">Other</th>
                                         <th class="pb-3 text-left text-gray-700">Total</th>
-                                        <th class="pb-3 text-left text-gray-700"></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="items-table">
-                                    <!-- Items will be added here -->
+                                    <!-- Item rows will be rendered here by JS -->
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="mt-4 flex justify-end">
+                            <button id="submit-items" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition duration-300">Submit</button>
+                        </div>
+                        <div id="submitted-items-table" class="mt-8 hidden">
+                            <h3 class="text-lg font-semibold mb-2">Submitted Items</h3>
+                            <div id="submitted-items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                <!-- JS will render submitted items as cards here -->
+                            </div>
                         </div>
                     </div>
                 </div>
